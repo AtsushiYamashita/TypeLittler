@@ -15,7 +15,7 @@
       "jest"
     ],
     "paths": {
-      "#/*": [
+      "#littler/*": [
         "./dist/*",
         "./dist/functions/*",
         "./dist/classes/*"
