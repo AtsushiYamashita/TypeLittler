@@ -54,7 +54,7 @@
       "**/tests/**/*.ts"
     ],
     "moduleNameMapper": {
-      "^#littler/(.+)": "<rootDir>/src/$1"
+      "^#/(.+)": "<rootDir>/src/$1"
     }
   }
 }

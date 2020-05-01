@@ -1,7 +1,7 @@
-import { PathValue } from "#littler/classes/PathValue"
+import { PathValue } from "#/classes/PathValue"
 
 // jest.mock()によってクラス全体をモック化できます
-jest.mock('#littler/classes/PathValue'); // パスを指定
+jest.mock('#/classes/PathValue'); // パスを指定
 
 // TypeScriptでは型変換する必要がある
 const PathValueMock = PathValue as any as jest.Mock;
