@@ -1,6 +1,6 @@
 {
   "name": "type-littler",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Little and simple feature on typescript for me.",
   "main": "./dist/index.js",
   "types": "./dist/indexd.ts",
