@@ -10,13 +10,18 @@
     "newLine": "lf",
     "outDir": "dist",
     "baseUrl": "./",
+    "types": [
+      "node",
+      "jest"
+    ],
     "paths": {
       "#/*": [
-        "defines/*"
+        "./src/*"
       ]
     },
     "typeRoots": [
-      "dist/*"
+      "node_modules/@types",
+      "src/*",
     ]
   }
 }
