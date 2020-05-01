@@ -10,6 +10,9 @@
     "newLine": "lf",
     "outDir": "dist",
     "baseUrl": "./",
+    "rootDirs": [
+      "./src/"
+    ],
     "types": [
       "node",
       "jest"
@@ -23,5 +26,12 @@
       "node_modules/@types",
       "src/*",
     ]
-  }
+  },
+  "include": [
+    "./src/"
+  ],
+  "exclude": [
+    "./script/",
+    "./test/"
+  ]
 }
