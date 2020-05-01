@@ -21,8 +21,8 @@
     },
     "typeRoots": [
       "node_modules/@types",
-      "./dist/*.d.ts",
-      "./dist/**/*.d.ts",
+      "./dist/*",
+      "./dist/**/*",
     ]
   }
 }
