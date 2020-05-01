@@ -8,7 +8,7 @@
     "makeup": "./node_modules/.bin/ts-node --files -r tsconfig-paths/register ./script/makeup.ts",
     "test": "./node_modules/jest/bin/jest.js",
     "build": "tsc --build ./tsconfig.build.json",
-    "prepublish": "npm version minor && npm publish"
+    "prepublish": "npm version minor "
   },
   "repository": {
     "type": "git",
