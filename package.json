@@ -1,0 +1,22 @@
+{
+  "name": "type-littler",
+  "version": "0.0.1",
+  "description": "Little and simple feature on typescript for me.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AtsushiYamashita/TypeLittler.git"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AtsushiYamashita/TypeLittler/issues"
+  },
+  "homepage": "https://github.com/AtsushiYamashita/TypeLittler#readme"
+}

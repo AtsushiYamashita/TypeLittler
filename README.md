@@ -1,2 +1,2 @@
 # TypeLittler
-Little and simple feature for typescript for me
+Little and simple feature on typescript for me.
