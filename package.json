@@ -2,10 +2,12 @@
   "name": "type-littler",
   "version": "0.0.1",
   "description": "Little and simple feature on typescript for me.",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/indexd.ts",
   "scripts": {
     "makeup": "./node_modules/.bin/ts-node --files -r tsconfig-paths/register ./script/makeup.ts",
-    "test": "node_modules/jest/bin/jest.js",
+    "test": "./node_modules/jest/bin/jest.js",
+    "build": "tsc --build ./tsconfig.build.json",
     "prepublish": "npm version minor && npm publish"
   },
   "repository": {
