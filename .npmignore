@@ -1,6 +1,6 @@
-src
-test
+tests
 memo
 .env
 .editorconfig
-
+.temp
+script

@@ -19,12 +19,15 @@
     ],
     "paths": {
       "#/*": [
-        "./src/*"
+        "./src/*",
+        "./src/functions/*",
+        "./src/classes/*"
       ]
     },
     "typeRoots": [
       "node_modules/@types",
-      "src/*",
+      "./dist/*",
+      "./dist/**/*",
     ]
   },
   "include": [
@@ -32,6 +35,6 @@
   ],
   "exclude": [
     "./script/",
-    "./test/"
+    "./tests/"
   ]
 }

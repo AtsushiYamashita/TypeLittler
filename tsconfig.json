@@ -16,7 +16,9 @@
     ],
     "paths": {
       "#/*": [
-        "./dist/*"
+        "./dist/*",
+        "./dist/functions/*",
+        "./dist/classes/*"
       ]
     },
     "typeRoots": [
