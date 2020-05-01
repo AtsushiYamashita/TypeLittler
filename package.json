@@ -3,7 +3,7 @@
   "version": "0.5.1",
   "description": "Little and simple feature on typescript for me.",
   "main": "./dist/index.js",
-  "types": "./dist/indexd.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "makeup": "./node_modules/.bin/ts-node --files -r tsconfig-paths/register ./script/makeup.ts",
     "test": "./node_modules/jest/bin/jest.js",
