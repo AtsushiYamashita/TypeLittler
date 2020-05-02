@@ -47,11 +47,12 @@
     },
     "globals": {
       "ts-jest": {
-        "tsConfig": "tsconfig.json"
+        "tsConfig": "tsconfig.json",
+        "BigInt":true
       }
     },
     "testMatch": [
-      "**/tests/**/*.ts"
+      "**/tests/**/*.test.ts"
     ],
     "moduleNameMapper": {
       "^#/(.+)": "<rootDir>/src/$1"
