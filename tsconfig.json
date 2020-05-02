@@ -16,13 +16,12 @@
     ],
     "paths": {
       "#/*": [
-        "./dist/*"
+        "./src/*"
       ]
     },
     "typeRoots": [
       "node_modules/@types",
-      "./dist/*",
-      "./dist/**/*",
+      "src/*",
     ]
   }
 }
