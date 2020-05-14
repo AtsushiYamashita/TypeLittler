@@ -1,6 +1,6 @@
 {
   "name": "type-littler",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "Little and simple feature on typescript for me.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -48,7 +48,7 @@
     "globals": {
       "ts-jest": {
         "tsConfig": "tsconfig.json",
-        "BigInt":true
+        "BigInt": true
       }
     },
     "testMatch": [
