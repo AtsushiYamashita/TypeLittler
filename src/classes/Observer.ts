@@ -1,152 +1,171 @@
 import { Func, Set } from "shorter-dts"
 import * as _ from "lodash"
 
-type Pack<V> = Set<string, V>
-type Notify<V> = Func<Pack<V>, void>;
-type Validater<V> = Func<Pack<V>, boolean>;
+// export type PackMethod = "Init" | "Update" | "Reset";
+// type Pack<V> = Set<PackMethod, V>;
+// type Notify<V> = Func<Pack<V>, EventStatus>
+// type Validater<V> = Func<Pack<V>, boolean>;
+type Notify<V> = Func<V, any>
+type Assertional<V> = Func<V, boolean>;
 
-type Rejector<V> = Func<V, boolean>;
-type Apply<V> = Func<V, void>;
+export class Rejector<V>{
+   private _validater: Assertional<V>[];
 
-export class SafeHolder<V>  {
-   private _observed: Pack<V>[];
-   private _validater: Validater<V>[];
-
-   constructor(v?: V, private length: number = 1) {
-      this._observed = _.isNull(v) || _.isUndefined(v) ? [] : [["init", v]];
+   constructor() {
       this._validater = [];
 
-      this.value = this.value.bind(this);
-      this.unset = this.unset.bind(this);
-      this.is_null = this.is_null.bind(this);
-
-      this.push = this.push.bind(this);
-      this.update = this.update.bind(this);
-
-      this.add_rejector = this.add_rejector.bind(this);
-      this.add_validater = this.add_validater.bind(this);
+      this.reject = this.reject.bind(this);
+      this.assert = this.assert.bind(this);
+      this.check_reject = this.check_reject.bind(this);
    }
 
-   value(): V[] {
-      const head = _.head(this._observed);
-      return !!head ? [head[1]] : [];
+   public assert(f: Assertional<V>): Rejector<V> {
+      this._validater.push(e => !f(e));
+      return this;
    }
 
-   is_null(): boolean {
-      return !_.head(this._observed);
+   public reject(f: Assertional<V>): Rejector<V> {
+      this._validater.push(e => f(e));
+      return this;
    }
 
-   push(pack: Pack<V>, cb: Func<Pack<V>, any>): boolean {
-      const val = pack[1];
-      const current = this.value()[0];
-
-      const same_value = _(current)
-         .isEqual(val);
-      if (same_value) return false;
-
+   public check_reject(pack: V) {
       const rejected = _(this._validater)
          .map(f => f(pack))
          .filter()
          .value().length;
-      if (rejected > 0) return false;
-
-      this._observed = this._observed
-         .concat([pack])
-         .slice(-this.length);
-      cb(pack);
-      return true;
-   }
-
-   update(v: V): boolean {
-      return this.push(["update", v], v => v);
-   }
-
-   unset(): void {
-      this._observed = [];
-   }
-
-   add_validater(f: Validater<V>): SafeHolder<V> {
-      this._validater.push(f);
-      return this;
-   }
-
-   add_rejector(f: Rejector<V>): SafeHolder<V> {
-      this._validater.push(e => f(e[1]));
-      return this;
+      if (rejected > 0) return true;
+      return false;
    }
 }
 
-export interface IObserver<V> {
-   add_shot(f: Apply<V>): IObserver<V>;
-   start_chain(): Promise<V>;
-   add_notify(f: Notify<V>): IObserver<V>;
-   push(pack: Pack<V>): boolean;
-   update(v: V): boolean;
-   holder: SafeHolder<V>;
-};
-
-export class Observer<V> implements IObserver<V>{
-   private _holder: SafeHolder<V>;
+export class Event<V> {
    private _notify: Notify<V>[];
-   private _shot: Apply<V>[];
+   private _shot: Func<V, any>[];
 
-   static start_chain<V>(): Promise<V> {
-      const ret = new Observer<V>();
-      return ret.start_chain();
-   }
-
-   constructor(v?: V, length: number = 1) {
-      this._holder = new SafeHolder(v, length);
+   constructor(private readonly _observer: Observer<V>) {
       this._notify = [];
       this._shot = [];
 
-      this.update = this.update.bind(this);
-      this.push = this.push.bind(this);
-      this.start_chain = this.start_chain.bind(this);
+      this.fire = this.fire.bind(this);
+      this.chain = this.chain.bind(this);
       this.add_shot = this.add_shot.bind(this);
       this.add_notify = this.add_notify.bind(this);
    }
 
-   get holder(): SafeHolder<V> {
-      return this._holder;
+   public fire(val: V) {
+      this._notify = this._notify
+         .map(f => [f(val), f] as Set<any, Notify<V>>)
+         .filter(e => !!e[0])
+         .map(e => e[1]);
+      this._shot.forEach(f => f(val));
+      this._shot = [];
    }
 
-   /** seal */
-   set holder(v: SafeHolder<V>) { }
-
-   update(v: V): boolean {
-      return this.push(["update", v]);
-   }
-
-   push(pack: Pack<V>): boolean {
-      return this._holder.push(pack, (pack) => {
-         this._notify.forEach(f => f(pack));
-         this._shot.forEach(f => f(pack[1]));
-         this._shot = [];
-      });
-   }
-
-   start_chain(): Promise<V> {
+   public chain(): Promise<V> {
+      const obs = this._observer;
       return new Promise<V>((res, _) => {
-         if (this._holder.is_null()) return this._shot.push(res);
-         res(this._holder.value()[0]);
+         if (obs.is_null) return res(obs.value[1]);
+         return this._shot.push(p => res(p));
       });
    }
 
-   add_shot(f: Apply<V>): IObserver<V> {
-      if (this._holder.is_null()) {
-         this._shot.push(f);
-         return this;
-      }
-      f(this._holder.value()[0]);
-      return this;
+   public add_shot(event: Func<V, any>): Observer<V> {
+      const obs = this._observer;
+      if (!!obs.head) return event(obs.head) ? this._observer : this._observer;
+      this._shot.push(event);
+      return this._observer;
    }
 
-   add_notify(f: Notify<V>): IObserver<V> {
-      this._notify.push(f);
-      return this;
+   public add_notify(event: Notify<V>): Observer<V> {
+      this._notify.push(event);
+      return this._observer;
+   }
+}
+
+
+export interface ISafeValue<V> {
+   value: V[];
+   head?: V;
+   is_null: boolean;
+}
+
+export class SafeValue<V> implements SafeValue<V> {
+   private _observed: V[];
+
+   constructor(private readonly _length: number) {
+      this._observed = [];
+
+      this.unset = this.unset.bind(this);
+      this.update = this.update.bind(this);
+   }
+
+   public get value(): V[] {
+      return this.is_null ? [] : [this._observed[0]];
+   }
+
+   public get head(): V | undefined {
+      return this._observed[0];
+   }
+
+   public get is_null(): boolean {
+      return this._observed.length < 1;
+   }
+
+   protected update(pack: V) {
+      this._observed = this._observed
+         .concat([pack])
+         .slice(-this._length);
+   }
+
+   public unset(): void {
+      this._observed = [];
+   }
+}
+
+export interface IObserver<V> extends ISafeValue<V> {
+   push(val: V): boolean;
+   event: Event<V>;
+   rejecter: Rejector<V>;
+}
+
+export class Observer<V>
+   extends SafeValue<V>
+   implements IObserver<V> {
+   public readonly event: Event<V>;
+   public readonly rejecter: Rejector<V>;
+
+   public static chain<V>(): Promise<V> {
+      const ret = new Observer<V>();
+      return ret.event.chain();
+   }
+
+   public static init<V>(v: V) {
+      const ret = new Observer<V>();
+      ret.push(v);
+      return ret;
+   }
+
+   constructor(length: number = 1) {
+      super(length);
+      this.event = new Event(this);
+      this.rejecter = new Rejector();
+
+      this.push = this.push.bind(this);
+   }
+
+   public push(val: V): boolean {
+      const not_null = this.is_null === false;
+      const is_same = () => _(this.head).isEqual(val)
+      if (not_null && is_same()) return true;
+
+      const rejected = this.rejecter.check_reject(val);
+      if (rejected) return false;
+
+      super.update(val);
+      this.event.fire(val);
+      return true;
    }
 }
 
 export default Observer;
-
