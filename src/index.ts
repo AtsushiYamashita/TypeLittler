@@ -5,6 +5,8 @@ import {
     Rejector,
     Event,
 } from "./classes/Observer"
+import { Identity, Injecter, } from "./classes/Injecter"
+
 import * as Add from "./functions/add"
 import * as TryHandle from "./functions/try_handle"
 import * as Hash from "./functions/hash"
@@ -15,6 +17,8 @@ export const TypeLittler = {
     SafeValue,
     Rejector,
     Event,
+    Identity,
+    Injecter,
 
     Add,
     TryHandle,
