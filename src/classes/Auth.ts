@@ -45,6 +45,10 @@ export const InjectKey = {
     WebAuthBuilder: (): WebAuthBuilder => ({ build(option: AuthOptions): IWebAuth { throw new Error("mock") } }),
 } as const;
 
+const FETCH_OPTION = {
+    credentials: 'same-origin'
+} as const;
+
 const webauthbuilder = Injecter.provide(InjectKey.WebAuthBuilder, InjectKey.Key);
 const auth_api = Injecter.provide(InjectKey.AUTH_API_SERVER, InjectKey.Key);
 const react_server = Injecter.provide(InjectKey.REACT_SERVER, InjectKey.Key);
@@ -69,13 +73,17 @@ class Auth {
         // .chain()
         // .then()
         // .then(self.auth0.update);
-        const api = auth_api && auth_api.head
+        const api = auth_api && auth_api.head;
         if (!api) throw new Error("API address had not injected");
 
-        fetch(
-            api, {
-            credentials: 'same-origin'
-        }).then(res => res.json().then(self.option.push))
+        // @ts-ignore
+        if (!fetch) throw new Error("Fetce cannot use");
+
+        // @ts-ignore
+        fetch(api, FETCH_OPTION)
+        // @ts-ignore
+            .then(async (res: Response) => await res.json())
+            .then(self.option.push)
             .catch(console.error);
         return self;
     }
@@ -184,7 +192,10 @@ class Auth {
         const to_hash = (user: WebAuth) => new Promise<AuthParsedHash>((res, rej) => {
             user.parseHash((err, hash) => !!err ? rej(err) : res(hash as AuthParsedHash));
         })
-        const hash_opt = (user: WebAuth) => _.merge(user, { hash: window.location.hash });
+
+        // @ts-ignore
+        const hash = { hash: window.location.hash }
+        const hash_opt = (user: WebAuth) => _.merge(user, hash);
 
         return new Promise<number[]>((res, rej) => {
             this.auth0.event.chain()
