@@ -6,6 +6,7 @@ import {
     Event,
 } from "./classes/Observer"
 import { Identity, Injecter, } from "./classes/Injecter"
+import { CaseAction, ConditinalCache } from "./classes/ConditionalCache"
 
 import * as Add from "./functions/add"
 import * as TryHandle from "./functions/try_handle"
@@ -19,6 +20,8 @@ export const TypeLittler = {
     Event,
     Identity,
     Injecter,
+    CaseAction,
+    ConditinalCache,
 
     Add,
     TryHandle,
