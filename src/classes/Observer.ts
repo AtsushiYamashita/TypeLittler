@@ -112,6 +112,10 @@ export class SafeValue<V> implements SafeValue<V> {
       return this._observed.length < 1;
    }
 
+   public tap(func: Func<V[], V> = e => e[0]): V {
+      return func(this._observed)
+   }
+
    protected update(pack: V) {
       this._observed = this._observed
          .concat([pack])

@@ -1,6 +1,6 @@
 {
   "name": "type-littler",
-  "version": "0.5.9",
+  "version": "0.5.11",
   "description": "Little and simple feature on typescript for me.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,7 +28,7 @@
     "@types/lodash": "^4.14.150",
     "@types/node": "^13.13.4",
     "jest": "^25.5.3",
-    "shorter-dts": "^1.1.1",
+    "shorter-dts": "^1.1.2",
     "ts-jest": "^25.4.0",
     "ts-loader": "^7.0.2",
     "ts-node": "^8.9.1",
