@@ -4,13 +4,14 @@ import {
     SafeValue,
     Rejector,
     Event,
-} from "./classes/Observer"
-import { Identity, Injecter, } from "./classes/Injecter"
-import { CaseAction, ConditinalCache } from "./classes/ConditionalCache"
+} from "./classes/Observer";
+import { Identity, Injecter, } from "./classes/Injecter";
+import { CaseAction, ConditinalCache } from "./classes/ConditionalCache";
 
-import * as Add from "./functions/add"
-import * as TryHandle from "./functions/try_handle"
-import * as Hash from "./functions/hash"
+import * as Add from "./functions/add";
+import * as TryHandle from "./functions/try_handle";
+import * as Hash from "./functions/hash";
+import * as Combinator from "./functions/combinator";
 
 export const TypeLittler = {
     PathValue,
@@ -25,7 +26,8 @@ export const TypeLittler = {
 
     Add,
     TryHandle,
-    Hash
-} as const
+    Hash,
+    Combinator,
+} as const;
 
-export default TypeLittler
+export default TypeLittler;
