@@ -24,9 +24,11 @@
   },
   "homepage": "https://github.com/AtsushiYamashita/TypeLittler#readme",
   "devDependencies": {
+    "@types/blueimp-md5": "^2.7.0",
     "@types/jest": "^25.2.1",
     "@types/lodash": "^4.14.150",
     "@types/node": "^13.13.4",
+    "@types/uuid": "^8.0.0",
     "jest": "^25.5.3",
     "shorter-dts": "^1.1.2",
     "ts-jest": "^25.4.0",
@@ -35,7 +37,9 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "lodash": "^4.17.15"
+    "blueimp-md5": "^2.16.0",
+    "lodash": "^4.17.15",
+    "uuid": "^8.1.0"
   },
   "jest": {
     "moduleFileExtensions": [

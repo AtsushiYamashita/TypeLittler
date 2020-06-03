@@ -7,7 +7,7 @@ const num_obj = (p: Map<number>, c: number) => { p["" + c] = c; return p }
 const enum_obj = <K, V>(p: Map<V>, [k, v]: [K, V]) => _.assign(p, { k: v });
 
 export const sampledata = {
-    num: [-1, 0, 1, 100, -412412, 2412532543],
+    num: [-1, 0, 1, 100, -412412, 2412532543,Math.PI],
     str: ["", "a", "\n", "\b", _.times(1000).join("_")],
     arr: [[], [, ,], [, , 3], [0], [0, 1, 2,], _.times(1000)],
     obj: [{},
