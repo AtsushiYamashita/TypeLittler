@@ -23,7 +23,6 @@ describe('short hash matching', () => {
         });
     })
 
-
     sampledata.str.forEach((data, i) => {
         test('str_set:' + i, () => {
             const d1 = tohash(data);
@@ -68,3 +67,13 @@ test('hashx', () => {
     const res = "4c0efb80";
     expect(d).not.toBe(res);
 });
+
+describe('Get md5 hash', () => {
+
+    test('from number', () => {
+        const d = Hash.to_md5("");
+        console.log(d)
+    });
+});
+
+
