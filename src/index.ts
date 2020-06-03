@@ -28,6 +28,6 @@ export const TypeLittler = {
     TryHandle,
     Hash,
     Combinator,
-} as const;
+};
 
 export default TypeLittler;
