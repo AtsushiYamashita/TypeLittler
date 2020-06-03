@@ -21,10 +21,17 @@ export const combinator = <A>(name: ErrorKey) => {
             if (e0.length > 0 || r0.length < 1) return [e0, r0 as any[] as R2[] || []];
             const [e1, r1] = fa(v);
             if (e1.length > 0) return [e1, r1 as any[] as R2[] || []];
-            return [con(r1[0]) ? [on_break] : [], r1 as any[] as R2[] || []]
+            return [con(r1[0]) ? [on_break] : [], r1 as any[] as R2[] || []];
+        });
+        const fix = <R2 = R>(con: Func<R, boolean>, fixed: R2) => imp((v: Set<any[], A[]>): Set<any[], R2[]> => {
+            const [e0, r0] = v;
+            if (e0.length > 0 || r0.length < 1) return [e0, r0 as any[] as R2[] || []];
+            const [e1, r1] = fa(v);
+            if (e1.length > 0) return [e1, r1 as any[] as R2[] || []];
+            return [[], con(r1[0]) ? r1 as any[] as R2[] || [] : [fixed]];
         });
         const brsome = (...obj: R[]) => br(e => obj.some(o => o === e));
-        return { mix, app, br, brsome }
+        return { mix, app, br, brsome, fix }
     }
     return imp(v => v);
 };
