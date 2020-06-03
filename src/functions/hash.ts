@@ -1,5 +1,18 @@
 import { try_handle } from "#/functions/try_handle";
 
+import md5 = require("blueimp-md5");
+
+// blueimp/JavaScript-MD5: JavaScript MD5 implementation. Compatible with server-side environments like node.js, module loaders like RequireJS and all web browsers.
+// : https://github.com/blueimp/JavaScript-MD5
+// import * as md5 from "blueimp-md5";
+
+
+export const to_md5 = <K = string | number, V = string | number | undefined>(key: K, value?: V) => {
+    const k = "" + key;
+    const v = typeof value === "undefined" ? "undefined" : "" + value;
+    return md5(v.trim(), k.trim()).toUpperCase();
+}
+
 export const is_usable_big = try_handle(_ => (!!BigInt), 200502.151548, 0)[0].length < 1;
 
 export const big_hash = function (
